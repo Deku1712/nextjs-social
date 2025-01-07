@@ -12,7 +12,7 @@ import {
 
 export default function Navbar() {
   return (
-    <div className="flex items-center justify-between h-24">
+    <div className="flex items-center justify-between h-24  ">
       {/* Left */}
       <div className=" md:hidden lg:block w-[20%]">
         <Link className="font-bold text-xl text-blue-600" href={"/"}>

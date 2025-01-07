@@ -28,25 +28,27 @@ export default function MobileMenu() {
         ></div>
       </div>
 
-      {isOpen && (
-        <div className=" absolute  left-0 top-24  w-full h-[calc(100vh-96px] bg-white flex flex-col items-center justify-center  gap-8  font-medium text-xl text-black">
-          <div>
-            <Link href={"/"}>Home</Link>
-          </div>
-          <div>
-            <Link href={"/"}>Friends</Link>
-          </div>
-          <div>
-            <Link href={"/"}>Groups</Link>
-          </div>
-          <div>
-            <Link href={"/"}>Stories</Link>
-          </div>{" "}
-          <div>
-            <Link href={"/"}>Login</Link>
-          </div>
+      <div
+        className={`absolute left-0 top-24  w-full  bg-white flex flex-col items-center justify-center  gap-8  font-medium text-xl text-black z-20 ${
+          isOpen ? "h-[calc(100vh-96px)]" : "h-0"
+        } ease-in-out duration-500 overflow-hidden`}
+      >
+        <div>
+          <Link href={"/"}>Home</Link>
         </div>
-      )}
+        <div>
+          <Link href={"/"}>Friends</Link>
+        </div>
+        <div>
+          <Link href={"/"}>Groups</Link>
+        </div>
+        <div>
+          <Link href={"/"}>Stories</Link>
+        </div>{" "}
+        <div>
+          <Link href={"/"}>Login</Link>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,48 +1,51 @@
 import Image from "next/image";
 import React from "react";
 import Comment from "./Comment";
+import { Post as PostType, User } from "@prisma/client";
+import { auth } from "@clerk/nextjs/server";
+import PostInfo from "./feed/PostInfo";
 
-export default function Post() {
+type FeedPostType = PostType & { user: User } & {
+  likes: [{ userId: string }];
+} & {
+  _count: { comments: number };
+};
+export default async function Post({ post }: { post: FeedPostType }) {
+  const { userId } = await auth();
+
   return (
-    <div className=" flex flex-col gap-4">
-      {/* User */}
-      <div className=" flex items-center justify-between">
-        <div className=" flex items-center gap-4">
+    <div className="flex flex-col gap-4">
+      {/* USER */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
           <Image
-            src={
-              "https://images.pexels.com/photos/14563895/pexels-photo-14563895.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            }
-            alt=""
+            src={post.user.avatar || "/noAvatar.png"}
             width={40}
             height={40}
-            className=" w-10 h-10 rounded-full"
-          />
-          <span className=" font-medium"> Jack MCBride</span>
-        </div>
-        <Image
-          src={"/more.png"}
-          alt=""
-          width={16}
-          height={16}
-          className=" w-4 h-4 rounded-full"
-        />
-      </div>
-      {/* Desc */}
-      <div className=" flex flex-col gap-4">
-        <div className=" w-full min-h-96 relative">
-          <Image
-            src="https://images.pexels.com/photos/29692594/pexels-photo-29692594/free-photo-of-qua-t-ng-giang-sinh-va-s-p-x-p-cay-thong.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             alt=""
-            fill
-            className=" object-cover rounded-md"
+            className="w-10 h-10 rounded-full"
           />
+          <span className="font-medium">
+            {post.user.name && post.user.surname
+              ? post.user.name + " " + post.user.surname
+              : post.user.username}
+          </span>
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum
-          inventore eum earum eaque culpa exercitationem error aspernatur
-          voluptatum, cumque magni? Cupiditate est enim reprehenderit.
-          Molestias, nisi maiores. Magni, ipsa aliquid.
-        </p>
+        {userId === post.user.id && <PostInfo postId={post.id} />}
+      </div>
+      {/* DESC */}
+      <div className="flex flex-col gap-4">
+        {post.img && (
+          <div className="w-full min-h-96 relative">
+            <Image
+              src={post.img}
+              fill
+              className="object-cover rounded-md"
+              alt=""
+            />
+          </div>
+        )}
+        <p>{post.desc}</p>
       </div>
       {/* Interaction */}
       <div className=" flex items-center justify-between text-sm my-4">
