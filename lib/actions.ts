@@ -164,3 +164,20 @@ export const updateProfile = async (
     return { success: false, error: true };
   }
 };
+
+export const getMessage = async (id: string) => {
+  const { userId: currentUserId } = await auth();
+  if (!currentUserId) throw new Error("You are not authenticated");
+  try {
+    const message = await prisma.messages.findMany({
+      where: {
+        senderId: currentUserId || id,
+        receiverId: id || currentUserId,
+      },
+    });
+    return message;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
+};

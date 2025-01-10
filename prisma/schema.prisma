@@ -36,6 +36,11 @@ model User {
   blocks                 Block[]         @relation("BlocksSent")
   blockedBy              Block[]         @relation("BlocksReceived")
   stories                Story[]
+
+
+  messagesSent Messages[] @relation("MessageSent")
+
+  messagesRecived Messages[] @relation("MessageReceived")
 }
 
 model Post {
@@ -112,3 +117,15 @@ model Story {
   user      User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   userId    String   @unique
 }
+
+
+model Messages {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  sender    User     @relation("MessageSent", fields: [senderId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  senderId  String
+  receiver   User     @relation("MessageReceived", fields: [receiverId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  receiverId String
+
+}
+

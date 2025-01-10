@@ -85,8 +85,7 @@ export async function POST(req: Request) {
           },
         });
         return new Response("User updated", { status: 200 });
-      } catch (error) {
-        console.log(error);
+      } catch {
         return new Response("Error: Could not create user");
       }
     }

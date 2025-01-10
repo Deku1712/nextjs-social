@@ -2,7 +2,6 @@ import React from "react";
 import Post from "../Post";
 import { auth } from "@clerk/nextjs/server";
 import prisma from "@/lib/client";
-import { create } from "domain";
 
 export default async function Feed({ username }: { username?: string }) {
   const { userId } = await auth();

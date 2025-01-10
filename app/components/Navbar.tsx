@@ -9,6 +9,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import Message from "./message/Message";
 
 export default function Navbar() {
   return (
@@ -78,9 +79,7 @@ export default function Navbar() {
               <div className=" cursor-pointer">
                 <Image src="/people.png" alt="" width={20} height={20} />
               </div>
-              <div className=" cursor-pointer">
-                <Image src="/messages.png" alt="" width={20} height={20} />
-              </div>{" "}
+              <Message />
               <div className=" cursor-pointer">
                 <Image src="/notifications.png" alt="" width={20} height={20} />
               </div>
